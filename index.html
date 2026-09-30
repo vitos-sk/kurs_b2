@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Немецкий B2 — только главное</title>
+<meta name="theme-color" content="#1E3C96">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Deutsch B2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FBFBF6; --grid:#DCE6EF; --ink:#1E3C96; --red:#C8322B; --text:#23262D; --muted:#5C6270;
+  --hl:#FFE45C; --hl-soft:#FFF4B0; --ok:#1E8A4C; --ok-bg:#E3F4EA; --bad-bg:#FBE6E4;
+  --card:#FFFFFF; --line:#C9D3DE;
+  --der:#1F4FBF; --die:#C8322B; --das:#1E8A4C;
+  --hand:"Caveat","Segoe Print","Comic Sans MS",cursive;
+  --sans:"Onest",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#18202C; --grid:#243042; --ink:#9DB4FF; --red:#FF7F74; --text:#E8EBF2; --muted:#A5ADBD;
+    --hl:#8A7400; --hl-soft:#3E3710; --ok:#5ED28E; --ok-bg:#16331F; --bad-bg:#3A1A18;
+    --card:#1F2937; --line:#34425A; --der:#8CB0FF; --die:#FF8F85; --das:#6FDDA0;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#18202C; --grid:#243042; --ink:#9DB4FF; --red:#FF7F74; --text:#E8EBF2; --muted:#A5ADBD;
+  --hl:#8A7400; --hl-soft:#3E3710; --ok:#5ED28E; --ok-bg:#16331F; --bad-bg:#3A1A18;
+  --card:#1F2937; --line:#34425A; --der:#8CB0FF; --die:#FF8F85; --das:#6FDDA0;
+}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px)}
+body{
+  margin:0;font-family:var(--sans);color:var(--text);font-size:17px;line-height:1.55;
+  background-color:var(--paper);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:22px 22px;
+}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+a{color:var(--ink)}
+
+/* top nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--paper);border-bottom:2px solid var(--ink)}
+.nav-in{max-width:880px;margin:0 auto;display:flex;align-items:center;gap:8px;padding:8px 12px}
+.tabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0}
+.tabs::-webkit-scrollbar{display:none}
+.nav button{border:0;background:transparent;padding:8px 12px;border-radius:8px;white-space:nowrap;font-weight:500;color:var(--muted)}
+.nav button[aria-current="page"]{color:var(--paper);background:var(--ink)}
+.nav .back{flex:none;width:40px;height:40px;padding:0;border-radius:50%;border:2px solid var(--ink);color:var(--ink);display:grid;place-items:center;font-size:20px;line-height:1;font-weight:700}
+.nav .back[hidden]{display:none}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--ink);color:var(--paper);padding:10px 18px;border-radius:24px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:50;max-width:90vw;text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.stats{display:flex;gap:20px;flex-wrap:wrap;margin:6px 0 0;color:var(--muted);align-items:baseline}
+.stats b{font-family:var(--hand);font-size:30px;color:var(--ink);margin-right:5px}
+textarea{width:100%;font:inherit;font-size:13px;border:1.5px solid var(--line);border-radius:6px;padding:10px;background:var(--card);color:var(--text);margin-top:8px}
+label.btn{display:inline-block;cursor:pointer}
+.btn.danger{border-color:var(--red);color:var(--red)}
+
+/* sheet */
+.sheet{max-width:880px;margin:0 auto;padding:28px 18px 80px 18px;position:relative}
+@media (min-width:720px){
+  .sheet{padding-left:92px}
+  .sheet::before{content:"";position:absolute;left:66px;top:0;bottom:0;width:2px;background:var(--red);opacity:.55}
+}
+h1,h2,h3{line-height:1.2;margin:0}
+.hand{font-family:var(--hand)}
+.title{font-family:var(--hand);font-size:clamp(44px,9vw,76px);color:var(--ink);font-weight:700;line-height:1;margin-bottom:10px}
+.title .strike{position:relative;color:var(--muted)}
+.title .strike::after{content:"";position:absolute;left:-4px;right:-4px;top:52%;height:4px;background:var(--red);transform:rotate(-3deg);border-radius:2px}
+.lead{font-size:19px;max-width:60ch}
+h2{font-size:28px;color:var(--ink);margin:6px 0 14px}
+h3{font-size:19px;margin:22px 0 8px}
+p{margin:0 0 12px;max-width:65ch}
+.muted{color:var(--muted)}
+.note{font-family:var(--hand);font-size:24px;color:var(--red);line-height:1.2;margin:14px 0}
+mark{background:linear-gradient(transparent 45%,var(--hl) 45%);color:inherit;padding:0 2px}
+
+/* progress */
+.progress{display:flex;align-items:center;gap:12px;margin:22px 0}
+.bar{flex:1;height:12px;border:2px solid var(--ink);border-radius:20px;overflow:hidden;background:var(--card)}
+.bar i{display:block;height:100%;background:var(--ink);transition:width .4s}
+.progress b{font-family:var(--hand);font-size:26px;color:var(--ink)}
+
+/* blocks */
+.box{background:var(--card);border:1.5px solid var(--line);border-radius:6px;padding:16px 18px;margin:14px 0}
+.formula{border:2px dashed var(--ink);border-radius:10px;padding:14px 16px;margin:14px 0;background:var(--card)}
+.formula .f{font-weight:600;font-size:18px;color:var(--ink);margin:4px 0}
+.trap{border-left:5px solid var(--red);background:var(--bad-bg);padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0}
+.trap strong{color:var(--red)}
+.ex{display:grid;grid-template-columns:1fr auto;gap:2px 10px;padding:10px 0;border-bottom:1px dashed var(--line)}
+.ex:last-child{border-bottom:0}
+.ex .de{font-weight:600}
+.ex .ru{color:var(--muted);font-size:15px;grid-column:1}
+.say{grid-row:1/3;grid-column:2;align-self:center;border:1.5px solid var(--line);background:transparent;border-radius:50%;width:38px;height:38px;display:grid;place-items:center;color:var(--ink)}
+.say svg{width:18px;height:18px}
+table{border-collapse:collapse;width:100%;font-size:16px}
+.tw{overflow-x:auto;margin:12px 0}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left;background:var(--card)}
+th{color:var(--ink);font-weight:600}
+
+/* lesson list */
+.lessons{display:grid;gap:10px;margin-top:16px}
+.lesson-btn{display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:12px;text-align:left;background:var(--card);border:1.5px solid var(--line);border-radius:6px;padding:12px 14px}
+.lesson-btn:hover{border-color:var(--ink)}
+.lesson-btn .n{font-family:var(--hand);font-size:30px;color:var(--ink);text-align:center}
+.lesson-btn .t{font-weight:600}
+.lesson-btn .s{display:block;font-size:14px;color:var(--muted);font-weight:400}
+.check{width:28px;height:28px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-weight:700}
+.check.on{border-color:var(--ok);background:var(--ok);color:var(--paper)}
+
+/* quiz */
+.quiz{margin-top:28px}
+.q{background:var(--card);border:1.5px solid var(--line);border-radius:6px;padding:14px 16px;margin:12px 0}
+.q .qt{font-weight:600;margin-bottom:10px}
+.opts{display:grid;gap:8px}
+.opt{text-align:left;border:1.5px solid var(--line);background:var(--paper);border-radius:6px;padding:10px 12px}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt.right{background:var(--ok-bg);border-color:var(--ok)}
+.opt.wrong{background:var(--bad-bg);border-color:var(--red)}
+.opt:disabled{cursor:default}
+.why{margin-top:10px;font-size:15px;padding:8px 12px;border-radius:6px;background:var(--hl-soft)}
+.btn{border:2px solid var(--ink);background:var(--ink);color:var(--paper);border-radius:8px;padding:10px 18px;font-weight:600}
+.btn.ghost{background:transparent;color:var(--ink)}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+
+/* builder */
+.builder .line{min-height:52px;border-bottom:2px solid var(--ink);display:flex;flex-wrap:wrap;gap:6px;padding:6px 0;align-items:center}
+.builder .prefix{color:var(--muted);font-weight:600}
+.pool{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.tok{border:1.5px solid var(--ink);background:var(--card);border-radius:6px;padding:6px 10px;font-weight:600}
+.line .tok{background:var(--hl-soft)}
+.result{margin-top:10px;font-weight:600}
+.result.ok{color:var(--ok)} .result.no{color:var(--red)}
+
+/* flashcards */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 18px}
+.chip{border:1.5px solid var(--line);background:var(--card);border-radius:20px;padding:6px 14px;font-size:15px}
+.chip[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--paper)}
+.card{perspective:1000px;height:250px;max-width:520px;margin:0 auto}
+.card-in{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d;cursor:pointer}
+.card.flip .card-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;background:var(--card);border:2px solid var(--ink);border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px;text-align:center}
+.face.back{transform:rotateY(180deg)}
+.face .w{font-size:30px;font-weight:700}
+.face .hint{position:absolute;bottom:10px;font-size:13px;color:var(--muted)}
+.face .tr{font-size:24px;font-weight:600;color:var(--ink)}
+.face .exs{margin-top:12px;font-size:15px;color:var(--muted)}
+.art-der{color:var(--der)} .art-die{color:var(--die)} .art-das{color:var(--das)}
+.cardbar{display:flex;justify-content:center;gap:10px;margin-top:16px;flex-wrap:wrap}
+.count{text-align:center;color:var(--muted);margin-top:10px;font-size:15px}
+@media (prefers-reduced-motion:reduce){.card-in,.bar i,.toast{transition:none}}
+
+/* phrases */
+.ph-group{margin-bottom:26px}
+.ph-group h3{font-family:var(--hand);font-size:30px;color:var(--ink);font-weight:700;margin-bottom:4px}
+
+/* glossary */
+.gl{display:grid;grid-template-columns:minmax(120px,200px) 1fr;gap:0;border-top:1px solid var(--line)}
+.gl dt,.gl dd{margin:0;padding:10px 8px;border-bottom:1px solid var(--line)}
+.gl dt{font-weight:700;color:var(--ink)}
+@media (max-width:520px){.gl{grid-template-columns:1fr}.gl dt{border-bottom:0;padding-bottom:0}}
+
+.backlink{border:0;background:none;color:var(--ink);font-weight:600;padding:0;margin-bottom:10px}
+.score{font-family:var(--hand);font-size:56px;color:var(--ink);line-height:1}
+.parts{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:14px 0}
+.parts .box{margin:0}
+.parts b{display:block;color:var(--ink);font-size:18px}
+</style>
+</head>
+<body>
+<nav class="nav" aria-label="Разделы"><div class="nav-in"><button class="back" id="back" data-go="home" aria-label="Назад" hidden>←</button><div class="tabs" id="nav"></div></div></nav>
+<main class="sheet" id="app"></main>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ---------- storage ---------- */
+const KEY='b2kurs_v1';
+const EMPTY=()=>({done:{},known:{},score:{},wrong:{},tests:[],days:[],last:''});
+let S=EMPTY();
+try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(EMPTY(),JSON.parse(r));}catch(e){}
+let storageOK=true;
+function today(){return new Date().toLocaleDateString('sv')}
+function save(){if(!S.days.includes(today())){S.days.push(today());S.days=S.days.slice(-400)}try{localStorage.setItem(KEY,JSON.stringify(S));storageOK=true}catch(e){storageOK=false}}
+
+/* ---------- speech ---------- */
+const SPK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg>';
+function speak(t){try{if(!window.speechSynthesis)return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t.replace(/[{}]/g,'').replace(/…/g,','));u.lang='de-DE';u.rate=.9;const v=speechSynthesis.getVoices().find(v=>v.lang&&v.lang.startsWith('de'));if(v)u.voice=v;speechSynthesis.speak(u);}catch(e){}}
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const hl=s=>esc(s).replace(/\{([^}]+)\}/g,'<mark>$1</mark>');
+function ex(de,ru){return `<div class="ex"><span class="de">${hl(de)}</span><button class="say" aria-label="Послушать" data-say="${esc(de)}">${SPK}</button><span class="ru">${esc(ru)}</span></div>`}
+function exs(list){return `<div class="box">${list.map(e=>ex(e[0],e[1])).join('')}</div>`}
+
+/* ---------- LESSONS ---------- */
+const L=[
+{id:'satz',t:'Где стоит глагол',s:'Главное правило всего немецкого',
+body:`
+<p>Если выучишь только одну вещь — выучи эту. Немцы очень строго ставят глагол на определённое место. Ошибка здесь слышна сразу, а правильный порядок делает речь «немецкой», даже если слова простые.</p>
+<h3>1. Обычное предложение: глагол всегда второй</h3>
+<p>Второй — это не второе <em>слово</em>, а второй <em>кусок</em>. Первым может быть что угодно: я, сегодня, в Берлине. Но глагол — сразу за ним.</p>
+<div class="formula"><div class="f">[что угодно] → [ГЛАГОЛ] → [остальное]</div></div>
+${exs([['Ich {arbeite} heute.','Я работаю сегодня.'],['Heute {arbeite} ich.','Сегодня работаю я. (глагол всё равно второй!)'],['In Freiburg {gibt} es viele Studenten.','Во Фрайбурге много студентов.']])}
+<h3>2. Глагол из двух частей: «рамка»</h3>
+<p>Когда глаголов два (могу + делать, сделал), первая часть стоит на втором месте, а вторая улетает в самый конец. Всё остальное — внутри, как в бутерброде.</p>
+<div class="formula"><div class="f">Ich [kann / habe / werde] … … … [machen / gemacht]</div></div>
+${exs([['Ich {muss} heute lange {arbeiten}.','Мне сегодня надо долго работать.'],['Ich {habe} gestern meinen Chef {angerufen}.','Я вчера позвонил шефу.'],['Ich {rufe} dich morgen {an}.','Я тебе завтра позвоню. (an — хвост глагола anrufen)']])}
+<h3>3. После weil, dass, wenn и т.п. — глагол в самый конец</h3>
+<p>Есть слова-«толкатели»: после них глагол уходит в конец своей части предложения.</p>
+<div class="formula"><div class="f">…, weil ich heute keine Zeit [HABE].</div><div class="f">…, dass ich die Prüfung bestanden [HABE].</div></div>
+${exs([['Ich komme nicht, weil ich krank {bin}.','Я не приду, потому что болею.'],['Ich glaube, dass er recht {hat}.','Я думаю, что он прав.'],['Wenn ich Zeit {habe}, {rufe} ich dich an.','Когда будет время, позвоню. (часть с wenn первая — значит дальше сразу глагол!)']])}
+<div class="trap"><strong>Ловушка:</strong> если предложение начинается с части «Wenn …, / Weil …,», то эта вся часть считается первым куском. Поэтому дальше сразу глагол: <em>Wenn ich Zeit habe, <b>komme</b> ich.</em> Не «ich komme».</div>`,
+q:[
+{q:'Выбери правильно:',o:['Morgen ich fahre nach Berlin.','Morgen fahre ich nach Berlin.','Morgen ich nach Berlin fahre.'],a:1,w:'«Morgen» занял первое место → глагол сразу вторым: fahre.'},
+{q:'Выбери правильно:',o:['Ich kann heute nicht kommen.','Ich kann nicht kommen heute.','Ich kommen kann heute nicht.'],a:0,w:'Рамка: kann на 2-м месте, kommen — в самом конце.'},
+{q:'Ich lerne Deutsch, …',o:['weil ich habe hier eine Arbeit.','weil ich hier eine Arbeit habe.','weil habe ich hier eine Arbeit.'],a:1,w:'После weil глагол улетает в конец.'},
+{b:['dass','ich','die Prüfung','bestanden','habe'],p:'Ich hoffe,',a:'dass ich die Prüfung bestanden habe'},
+{b:['habe','gestern','ich','lange','gearbeitet'],p:'',a:'gestern habe ich lange gearbeitet',cap:true}
+]},
+
+{id:'links',t:'Связки: weil, deshalb, trotzdem…',s:'Три группы — и всё понятно',
+body:`
+<p>Связки соединяют мысли. На B2 без них никак: в письме и в разговоре надо объяснять «почему», «поэтому», «несмотря на». Хорошая новость: все связки делятся всего на три группы — по тому, что они делают с глаголом.</p>
+<div class="tw"><table>
+<tr><th>Группа</th><th>Что с глаголом</th><th>Слова</th></tr>
+<tr><td><b>A. Ничего не трогают</b></td><td>обычный порядок</td><td>und, aber, oder, denn, sondern</td></tr>
+<tr><td><b>B. Толкают в конец</b></td><td>глагол в самый конец</td><td>weil, dass, obwohl, wenn, als, ob, damit, nachdem, bevor, während, bis, seit</td></tr>
+<tr><td><b>C. Сами занимают 1-е место</b></td><td>глагол сразу после</td><td>deshalb, deswegen, trotzdem, dann, danach, außerdem, sonst</td></tr>
+</table></div>
+<p>Одна и та же мысль тремя способами:</p>
+${exs([['Ich bleibe zu Hause, {denn} ich {bin} krank.','A: denn — «ведь», порядок не меняется'],['Ich bleibe zu Hause, {weil} ich krank {bin}.','B: weil — глагол в конец'],['Ich bin krank, {deshalb} {bleibe} ich zu Hause.','C: deshalb — «поэтому», глагол сразу за ним']])}
+<h3>obwohl и trotzdem — «хотя» и «всё равно»</h3>
+${exs([['{Obwohl} ich müde {bin}, gehe ich zum Kurs.','Хотя я устал, я иду на курс.'],['Ich bin müde. {Trotzdem} {gehe} ich zum Kurs.','Я устал. Всё равно иду на курс.']])}
+<div class="note">Лайфхак: если не уверен — используй weil и deshalb. Они закрывают 80% ситуаций.</div>`,
+q:[
+{q:'Ich bin müde, … gehe ich früh schlafen.',o:['weil','deshalb','denn'],a:1,w:'После связки сразу стоит глагол gehe → это группа C: deshalb.'},
+{q:'Ich gehe arbeiten, … ich krank bin.',o:['obwohl','trotzdem','aber'],a:0,w:'Глагол bin в конце → группа B. «Хотя я болен» = obwohl.'},
+{q:'Ich bin krank. … gehe ich zur Arbeit.',o:['Obwohl','Trotzdem','Weil'],a:1,w:'Глагол сразу после → группа C. «Всё равно» = trotzdem.'},
+{q:'Где правильно?',o:['Ich lerne viel, denn ich will die Prüfung bestehen.','Ich lerne viel, denn ich die Prüfung bestehen will.'],a:0,w:'denn — группа A, порядок обычный.'},
+{b:['deshalb','suche','ich','eine neue Wohnung'],p:'Die Miete ist zu hoch,',a:'deshalb suche ich eine neue Wohnung'}
+]},
+
+{id:'wennals',t:'wenn или als, um … zu или damit',s:'Самые частые путаницы',
+body:`
+<h3>wenn / als — оба значат «когда»</h3>
+<div class="formula"><div class="f">als = один раз и в прошлом</div><div class="f">wenn = каждый раз, или в будущем, или «если»</div></div>
+${exs([['{Als} ich Kind war, lebte ich in der Ukraine.','Когда я был ребёнком… (детство было один раз)'],['{Als} ich nach Deutschland kam, sprach ich kein Deutsch.','Когда я приехал в Германию… (один раз)'],['{Wenn} ich Zeit habe, gehe ich boxen.','Когда (каждый раз, как) есть время…'],['{Wenn} es morgen regnet, bleiben wir zu Hause.','Если завтра будет дождь…']])}
+<h3>um … zu / damit — «чтобы»</h3>
+<p><b>um … zu</b> — когда тот, кто делает, и тот, для кого цель, один и тот же человек. <b>damit</b> — когда люди разные.</p>
+${exs([['Ich lerne jeden Tag, {um} die Prüfung {zu} bestehen.','Я учу, чтобы (я) сдать экзамен. Один человек.'],['Ich spreche langsam, {damit} du mich verstehst.','Я говорю медленно, чтобы ТЫ понял. Разные люди.']])}
+<h3>dass / ob — «что» и «ли»</h3>
+${exs([['Ich weiß, {dass} er kommt.','Я знаю, что он придёт.'],['Ich weiß nicht, {ob} er kommt.','Я не знаю, придёт ли он.']])}
+<div class="trap"><strong>Ловушка:</strong> русское «если» — это почти всегда <b>wenn</b>, не «ob». «ob» — только там, где по-русски «ли».</div>`,
+q:[
+{q:'… ich 10 Jahre alt war, sind wir umgezogen.',o:['Wenn','Als'],a:1,w:'Один раз в прошлом → als.'},
+{q:'… ich Zeit habe, gehe ich ins Fitnessstudio.',o:['Wenn','Als'],a:0,w:'Каждый раз → wenn.'},
+{q:'Ich lerne jeden Tag, … die Prüfung zu bestehen.',o:['um','damit'],a:0,w:'Один и тот же человек + zu в конце → um … zu.'},
+{q:'Ich erkläre es langsam, … du es verstehst.',o:['um','damit'],a:1,w:'Я объясняю, понимаешь — ты. Разные люди → damit.'},
+{q:'Ich weiß nicht, … er morgen kommt.',o:['dass','ob'],a:1,w:'«придёт ЛИ» → ob.'}
+]},
+
+{id:'konj',t:'«Бы»: würde, hätte, wäre',s:'Мечты, советы, вежливость',
+body:`
+<p>Немецкое «бы» звучит сложно (Konjunktiv II), но на деле это почти всегда одна конструкция. На экзамене она нужна постоянно: вежливые просьбы, советы, «если бы».</p>
+<div class="formula"><div class="f">würde + … + глагол в конце = «сделал бы»</div></div>
+${exs([['Ich {würde} gern mehr reisen.','Я бы хотел больше путешествовать.'],['An deiner Stelle {würde} ich das nicht machen.','На твоём месте я бы так не делал.']])}
+<h3>Короткие формы — выучи просто как слова</h3>
+<div class="tw"><table>
+<tr><th>обычно</th><th>с «бы»</th><th>значит</th></tr>
+<tr><td>bin / ist</td><td><b>wäre</b></td><td>был бы</td></tr>
+<tr><td>habe / hat</td><td><b>hätte</b></td><td>имел бы</td></tr>
+<tr><td>kann</td><td><b>könnte</b></td><td>мог бы</td></tr>
+<tr><td>muss</td><td><b>müsste</b></td><td>должен был бы</td></tr>
+<tr><td>soll</td><td><b>sollte</b></td><td>следовало бы</td></tr>
+</table></div>
+${exs([['Wenn ich mehr Zeit {hätte}, {würde} ich mehr lernen.','Если бы у меня было больше времени, я бы больше учил.'],['Wenn ich du {wäre}, {würde} ich die Stelle nehmen.','Если бы я был тобой, взял бы эту работу.'],['{Könnten} Sie mir bitte helfen?','Не могли бы вы мне помочь? (вежливо)'],['Du {solltest} früher schlafen gehen.','Тебе стоило бы раньше ложиться. (совет)']])}
+<h3>«Сделал бы тогда» — про прошлое</h3>
+<div class="formula"><div class="f">hätte / wäre + … + gemacht</div></div>
+${exs([['Ich {hätte} das anders {gemacht}.','Я бы сделал это по-другому.'],['Wenn ich früher aufgestanden {wäre}, {hätte} ich den Bus nicht verpasst.','Если бы я встал раньше, не опоздал бы на автобус.']])}`,
+q:[
+{q:'Wenn ich mehr Geld …, würde ich ein Auto kaufen.',o:['habe','hätte','wäre'],a:1,w:'«было бы» (иметь) → hätte.'},
+{q:'Wenn ich du …, würde ich den Job nehmen.',o:['hätte','wäre','würde'],a:1,w:'«был бы» → wäre.'},
+{q:'Как вежливее попросить в ведомстве?',o:['Geben Sie mir das Formular!','Könnten Sie mir bitte das Formular geben?'],a:1,w:'Könnten Sie … bitte …? — стандарт вежливости.'},
+{q:'Hätte ich mehr gelernt, … ich die Prüfung bestanden.',o:['hätte','würde','wäre'],a:0,w:'bestanden haben → в прошлом «бы» = hätte … bestanden.'}
+]},
+
+{id:'passiv',t:'Пассив: «делается», «было сделано»',s:'Без него не прочитать тексты',
+body:`
+<p>Пассив — это когда неважно, <em>кто</em> делает, а важно, <em>что</em> делается. В статьях, письмах от ведомств и объявлениях он везде.</p>
+<div class="formula"><div class="f">werden + … + gemacht (третья форма глагола)</div></div>
+<div class="tw"><table>
+<tr><th>время</th><th>формула</th><th>пример</th></tr>
+<tr><td>сейчас</td><td>wird + gemacht</td><td>Das Haus <b>wird</b> gebaut. — Дом строится.</td></tr>
+<tr><td>прошлое</td><td>wurde + gemacht</td><td>Das Haus <b>wurde</b> 1990 gebaut. — Дом построили.</td></tr>
+<tr><td>с «надо/можно»</td><td>muss + gemacht werden</td><td>Das Formular <b>muss</b> ausgefüllt <b>werden</b>. — Бланк нужно заполнить.</td></tr>
+</table></div>
+${exs([['Hier {wird} nicht {geraucht}.','Здесь не курят.'],['Der Antrag {wurde} {abgelehnt}.','Заявку отклонили.'],['Die Miete {muss} bis zum 3. {bezahlt werden}.','Аренда должна быть оплачена до 3-го.'],['Das Problem wurde {von} der Firma gelöst.','Проблему решила фирма. (von = кем)']])}
+<h3>werden — слово с тремя работами</h3>
+${exs([['Ich {werde} Fliesenleger.','werden + слово = СТАТЬ'],['Ich {werde} dich morgen {anrufen}.','werden + глагол = БУДУЩЕЕ (позвоню)'],['Die Wand {wird} {gestrichen}.','werden + gemacht = ПАССИВ (красится)']])}
+<div class="note">Формы: ich werde, du wirst, er wird, wir werden, ihr werdet, sie werden. Прошлое: wurde.</div>`,
+q:[
+{q:'Die Wohnung … jeden Freitag geputzt.',o:['wird','ist','hat'],a:0,w:'Пассив сейчас: wird + geputzt.'},
+{q:'Das Haus … 1990 gebaut.',o:['wird','wurde','würde'],a:1,w:'Прошлое → wurde.'},
+{q:'Der Antrag muss bis Freitag …',o:['abgegeben werden','abgegeben wird','abgeben werden'],a:0,w:'muss + gemacht + werden.'},
+{q:'«Ich werde morgen anrufen» значит:',o:['Я позвоню завтра','Мне завтра позвонят','Я стал звонить'],a:0,w:'werden + обычный глагол = будущее.'}
+]},
+
+{id:'relativ',t:'«Который»: der, die, das',s:'Длинные умные предложения',
+body:`
+<p>Чтобы говорить на B2, надо соединять предложения: «Это коллега, <em>который</em> мне помог». В немецком «который» — это der / die / das, а глагол уходит в конец.</p>
+<div class="formula"><div class="f">Der Mann, [der] … … [ГЛАГОЛ], ist mein Chef.</div></div>
+<p>Какое слово выбрать — зависит от двух вещей: род слова (der/die/das) и <b>роль</b> «которого» в своей части: он делает (кто?), его (кого?), ему (кому?).</p>
+<div class="tw"><table>
+<tr><th></th><th>der-слово</th><th>die-слово</th><th>das-слово</th><th>много</th></tr>
+<tr><td>кто? (делает сам)</td><td>der</td><td>die</td><td>das</td><td>die</td></tr>
+<tr><td>кого? что?</td><td><b>den</b></td><td>die</td><td>das</td><td>die</td></tr>
+<tr><td>кому? / после mit, bei…</td><td><b>dem</b></td><td><b>der</b></td><td><b>dem</b></td><td><b>denen</b></td></tr>
+</table></div>
+${exs([['Das ist der Kollege, {der} mir geholfen hat.','…который мне помог (он сам делал)'],['Das ist der Kollege, {den} ich gestern getroffen habe.','…которого я встретил'],['Das ist die Kollegin, {der} ich geholfen habe.','…которой я помог'],['Das ist die Firma, bei {der} ich arbeite.','…в которой я работаю'],['Die Leute, mit {denen} ich arbeite, sind nett.','Люди, с которыми я работаю…']])}
+<div class="note">Проще всего: сначала задай вопрос «который — кто/кого/кому?». Потом смотри в таблицу.</div>`,
+q:[
+{q:'Das ist der Kollege, … mir geholfen hat.',o:['der','den','dem'],a:0,w:'Он сам помог (кто?) → der.'},
+{q:'Das ist der Kollege, … ich gestern getroffen habe.',o:['der','den','dem'],a:1,w:'Я встретил его (кого?) → den.'},
+{q:'Das ist die Firma, bei … ich arbeite.',o:['die','der','denen'],a:1,w:'bei → «кому/где»-строка, die-слово → der.'},
+{q:'Die Leute, mit … ich arbeite, sind nett.',o:['die','denen','dem'],a:1,w:'много + mit → denen.'}
+]},
+
+{id:'kasus',t:'Падежи и предлоги — минимум',s:'Кто, кого, кому + какие предлоги что требуют',
+body:`
+<p>Термины Nominativ/Akkusativ/Dativ пугают, но это просто русские вопросы.</p>
+<div class="tw"><table>
+<tr><th>вопрос</th><th>der</th><th>die</th><th>das</th><th>много</th></tr>
+<tr><td>кто? что? (Nominativ)</td><td>der / ein</td><td>die / eine</td><td>das / ein</td><td>die</td></tr>
+<tr><td>кого? что? (Akkusativ)</td><td><b>den / einen</b></td><td>die / eine</td><td>das / ein</td><td>die</td></tr>
+<tr><td>кому? где? (Dativ)</td><td><b>dem / einem</b></td><td><b>der / einer</b></td><td><b>dem / einem</b></td><td><b>den</b> + -n</td></tr>
+</table></div>
+<div class="note">Заметь: меняется в основном der-слово. die и das почти всегда спокойные (кроме «кому»).</div>
+<h3>Предлоги — выучи группами</h3>
+<div class="formula">
+<div class="f">всегда «кого»: durch, für, gegen, ohne, um</div>
+<div class="f">всегда «кому»: aus, bei, mit, nach, seit, von, zu</div>
+<div class="f">«куда?» → кого / «где?» → кому: in, an, auf, über, unter, vor, hinter, neben, zwischen</div>
+<div class="f">B2-уровень (Genitiv): wegen, trotz, während, statt</div>
+</div>
+${exs([['Das ist {für den} Chef.','für → всегда «кого»: den'],['Ich fahre {mit dem} Bus.','mit → всегда «кому»: dem'],['Ich gehe {in die} Stadt. / Ich bin {in der} Stadt.','куда? → die / где? → der'],['{Wegen des} Regens bleiben wir zu Hause.','Из-за дождя… (wegen → des / der)'],['{Trotz der} Probleme hat es geklappt.','Несмотря на проблемы…']])}
+<div class="trap"><strong>Совет:</strong> в разговоре немцы часто говорят «wegen dem Regen». В письменной части лучше «wegen des Regens» — это как раз показывает B2.</div>`,
+q:[
+{q:'Ich fahre mit … Bus.',o:['den','dem','der'],a:1,w:'mit → всегда «кому». der Bus → dem.'},
+{q:'Das Geschenk ist für … Mutter.',o:['meine','meiner','meinem'],a:0,w:'für → «кого». die Mutter → meine (не меняется).'},
+{q:'Ich lege das Buch auf … Tisch. (куда?)',o:['den','dem'],a:0,w:'Куда? → «кого» → den.'},
+{q:'Das Buch liegt auf … Tisch. (где?)',o:['den','dem'],a:1,w:'Где? → «кому» → dem.'},
+{q:'… des Regens bleiben wir zu Hause.',o:['Wegen','Mit','Für'],a:0,w:'des = Genitiv → wegen.'}
+]},
+
+{id:'adj',t:'Окончания прилагательных',s:'Правило выживания, без таблиц на 48 клеток',
+body:`
+<p>Это самая «таблично-страшная» тема. Но на экзамене пара ошибок тут не убьёт. Вот упрощённое правило, которое работает почти всегда.</p>
+<h3>Правило 1. Артикль уже «сказал», какое слово → прилагательное ленивое: -e или -en</h3>
+<div class="formula"><div class="f">der / die / das (в «кто?») → -e</div><div class="f">почти всё остальное → -en</div></div>
+${exs([['der {alte} Mann, die {neue} Wohnung, das {kleine} Kind','«кто?» → -e'],['mit dem {alten} Mann, den {neuen} Job, die {netten} Kollegen','кому / кого (der) / много → -en']])}
+<h3>Правило 2. Артикля нет или он «молчит» → прилагательное берёт окончание артикля на себя</h3>
+<p>«Молчащий» артикль — это ein, kein, mein без окончания. Он не показывает род, поэтому прилагательное показывает его вместо него.</p>
+${exs([['ein {großer} Mann','der → -er'],['ein {kleines} Kind','das → -es'],['{frisches} Brot, {kalter} Kaffee','без артикля: das → -es, der → -er'],['eine {gute} Idee','eine уже «сказал» die → -e']])}
+<div class="note">Короче: видишь der/die/das/dem/den → ставь -e/-en. Видишь голое ein → прилагательное делает -er (der) или -es (das).</div>`,
+q:[
+{q:'Das ist ein … Problem. (das Problem)',o:['großer','großes','große'],a:1,w:'ein «молчит», слово das → -es.'},
+{q:'Ich habe einen … Job gefunden.',o:['neuen','neuer','neues'],a:0,w:'einen уже показал всё → ленивое -en.'},
+{q:'Der … Mann ist mein Chef.',o:['alte','alten','alter'],a:0,w:'der + «кто?» → -e.'},
+{q:'mit dem … Auto',o:['neue','neuen','neues'],a:1,w:'dem → всё показал → -en.'}
+]},
+
+{id:'verbprep',t:'Глаголы со «своим» предлогом',s:'warten auf, sich freuen über…',
+body:`
+<p>Многие глаголы в немецком всегда идут с определённым предлогом. Логики часто нет — это просто надо знать как пару. Экзамен (особенно чтение) проверяет их постоянно.</p>
+<div class="tw"><table>
+<tr><th>пара</th><th>значит</th></tr>
+<tr><td>warten <b>auf</b> + кого</td><td>ждать</td></tr>
+<tr><td>sich freuen <b>auf</b></td><td>радоваться тому, что будет</td></tr>
+<tr><td>sich freuen <b>über</b></td><td>радоваться тому, что уже есть</td></tr>
+<tr><td>denken <b>an</b></td><td>думать о</td></tr>
+<tr><td>sich interessieren <b>für</b></td><td>интересоваться</td></tr>
+<tr><td>sich kümmern <b>um</b></td><td>заботиться, заниматься</td></tr>
+<tr><td>sich bewerben <b>um</b> (+ bei фирма)</td><td>подавать на вакансию</td></tr>
+<tr><td>sich beschweren <b>über</b> (+ bei кому)</td><td>жаловаться</td></tr>
+<tr><td>teilnehmen <b>an</b> + кому</td><td>участвовать</td></tr>
+<tr><td>sich erinnern <b>an</b></td><td>вспоминать</td></tr>
+<tr><td>sich gewöhnen <b>an</b></td><td>привыкать</td></tr>
+<tr><td>Angst haben <b>vor</b> + кому</td><td>бояться</td></tr>
+<tr><td>abhängen <b>von</b></td><td>зависеть от</td></tr>
+<tr><td>sich verlassen <b>auf</b></td><td>полагаться</td></tr>
+<tr><td>bitten <b>um</b></td><td>просить о</td></tr>
+<tr><td>sich entscheiden <b>für</b></td><td>решиться на, выбрать</td></tr>
+<tr><td>sprechen <b>über</b> / <b>mit</b></td><td>говорить о / с</td></tr>
+<tr><td>sich beschäftigen <b>mit</b></td><td>заниматься чем-то</td></tr>
+<tr><td>träumen <b>von</b></td><td>мечтать о</td></tr>
+<tr><td>achten <b>auf</b></td><td>обращать внимание</td></tr>
+</table></div>
+<h3>Вопрос и «это»: wo(r)- / da(r)-</h3>
+<p>Когда речь о вещи (не о человеке), предлог склеивается: <b>wo + предлог</b> для вопроса, <b>da + предлог</b> для «этого». Если предлог начинается с гласной — вставляем r.</p>
+${exs([['{Worauf} wartest du? — Ich warte {darauf}, dass du fertig bist.','Чего ты ждёшь? — Жду, пока (того, что) ты закончишь.'],['{Wofür} interessierst du dich? — {Dafür} interessiere ich mich nicht.','Чем интересуешься? — Этим не интересуюсь.'],['Ich freue mich {darüber}, dass du gekommen bist.','Я рад тому, что ты пришёл.']])}`,
+q:[
+{q:'Ich warte … den Bus.',o:['auf','für','an'],a:0,w:'warten auf.'},
+{q:'Ich interessiere mich … Politik.',o:['an','für','über'],a:1,w:'sich interessieren für.'},
+{q:'Ich freue mich … das Wochenende. (оно ещё будет)',o:['über','auf'],a:1,w:'Будущее → auf.'},
+{q:'Ich denke oft … meine Familie.',o:['über','an','von'],a:1,w:'denken an.'},
+{q:'… wartest du?',o:['Worauf','Wofür','Woran'],a:0,w:'warten auf → wo + r + auf.'}
+]},
+
+{id:'nvv',t:'Устойчивые пары «слово + глагол»',s:'Звучит сразу как B2',
+body:`
+<p>Это готовые кусочки: существительное + свой глагол. Переводить дословно нельзя (решение не «делают», а «встречают»). Зато если вставишь 3–4 таких пары в письмо — экзаменатор сразу видит уровень.</p>
+<div class="tw"><table>
+<tr><th>пара</th><th>значит</th></tr>
+<tr><td>eine Entscheidung <b>treffen</b></td><td>принять решение</td></tr>
+<tr><td>einen Antrag <b>stellen</b></td><td>подать заявление</td></tr>
+<tr><td>eine Frage <b>stellen</b></td><td>задать вопрос</td></tr>
+<tr><td>eine Rolle <b>spielen</b></td><td>играть роль</td></tr>
+<tr><td>zur Verfügung <b>stehen</b></td><td>быть в распоряжении</td></tr>
+<tr><td>Rücksicht <b>nehmen</b> auf</td><td>считаться с кем-то</td></tr>
+<tr><td>in Frage <b>kommen</b></td><td>подходить, рассматриваться</td></tr>
+<tr><td>Verantwortung <b>übernehmen</b></td><td>взять ответственность</td></tr>
+<tr><td>Bescheid <b>sagen / geben</b></td><td>сообщить, дать знать</td></tr>
+<tr><td>Kritik <b>üben</b> an</td><td>критиковать</td></tr>
+<tr><td>Einfluss <b>nehmen</b> auf</td><td>влиять</td></tr>
+<tr><td>einen Beitrag <b>leisten</b></td><td>внести вклад</td></tr>
+<tr><td>Maßnahmen <b>ergreifen</b></td><td>принять меры</td></tr>
+<tr><td>in Anspruch <b>nehmen</b></td><td>воспользоваться (услугой)</td></tr>
+<tr><td>zum Ausdruck <b>bringen</b></td><td>выразить</td></tr>
+<tr><td>in Kontakt <b>treten</b></td><td>связаться</td></tr>
+</table></div>
+${exs([['Ich habe noch keine {Entscheidung getroffen}.','Я ещё не принял решение.'],['Geld {spielt} für mich keine große {Rolle}.','Деньги для меня не играют большой роли.'],['Geben Sie mir bitte {Bescheid}, wenn der Termin frei ist.','Сообщите, пожалуйста, когда освободится термин.'],['Ich möchte meine Unzufriedenheit {zum Ausdruck bringen}.','Хочу выразить своё недовольство. (для жалобы — золото)']])}`,
+q:[
+{q:'eine Entscheidung …',o:['machen','treffen','nehmen'],a:1,w:'Entscheidung treffen.'},
+{q:'einen Antrag …',o:['stellen','machen','geben'],a:0,w:'Antrag stellen.'},
+{q:'Das … eine große Rolle.',o:['macht','spielt','hat'],a:1,w:'Rolle spielen.'},
+{q:'Der Raum … Ihnen zur Verfügung.',o:['steht','liegt','ist'],a:0,w:'zur Verfügung stehen.'}
+]},
+
+{id:'paare',t:'Двойные связки: je … desto, weder … noch',s:'Любимые слова экзаменаторов',
+body:`
+<p>Связки из двух частей делают речь «взрослой». Их немного — выучи как готовые формулы.</p>
+<div class="tw"><table>
+<tr><th>формула</th><th>значит</th></tr>
+<tr><td>sowohl … als auch</td><td>как …, так и</td></tr>
+<tr><td>nicht nur … sondern auch</td><td>не только …, но и</td></tr>
+<tr><td>weder … noch</td><td>ни …, ни</td></tr>
+<tr><td>entweder … oder</td><td>или …, или</td></tr>
+<tr><td>zwar … aber</td><td>хотя и …, но</td></tr>
+<tr><td>einerseits … andererseits</td><td>с одной стороны … с другой</td></tr>
+<tr><td>je … desto</td><td>чем …, тем</td></tr>
+</table></div>
+${exs([['Ich spreche {sowohl} Ukrainisch {als auch} Russisch.','Говорю и по-украински, и по-русски.'],['Ich habe {weder} Zeit {noch} Lust.','Нет ни времени, ни желания.'],['Die Wohnung ist {zwar} klein, {aber} günstig.','Квартира хоть и маленькая, но недорогая.'],['{Einerseits} ist Homeoffice bequem, {andererseits} fehlt der Kontakt.','С одной стороны удобно, с другой — не хватает общения.'],['{Je} mehr ich übe, {desto} besser spreche ich.','Чем больше тренируюсь, тем лучше говорю.']])}
+<div class="trap"><strong>je … desto:</strong> после je глагол в конец (übe), после desto + слово — глагол сразу (spreche). Выучи этот пример наизусть и подставляй свои слова.</div>`,
+q:[
+{q:'Je mehr ich übe, … besser spreche ich.',o:['desto','als','so'],a:0,w:'je … desto.'},
+{q:'Ich spreche … Englisch … Deutsch. (и то, и то)',o:['sowohl … als auch','weder … noch'],a:0,w:'«и …, и» = sowohl … als auch.'},
+{q:'Ich habe … Zeit … Lust. (ни … ни)',o:['weder … noch','entweder … oder'],a:0,w:'«ни …, ни» = weder … noch.'},
+{q:'Die Wohnung ist … klein, … sie ist billig.',o:['zwar … aber','nicht nur … sondern auch'],a:0,w:'«хоть и …, но» = zwar … aber.'}
+]},
+
+{id:'zu',t:'Глагол с «zu»',s:'Ich habe keine Lust, … zu machen',
+body:`
+<p>После многих выражений второй глагол идёт в конец с частичкой <b>zu</b>. По-русски это просто «делать».</p>
+<div class="formula"><div class="f">…, [всё остальное] zu machen.</div></div>
+<p>Типичные «запускатели»: Lust haben, Zeit haben, versuchen, vergessen, anfangen, aufhören, planen, es ist wichtig / schwer / möglich.</p>
+${exs([['Ich habe keine Lust, heute {zu kochen}.','Нет желания сегодня готовить.'],['Es ist wichtig, pünktlich {zu sein}.','Важно быть пунктуальным.'],['Ich versuche, jeden Tag Deutsch {zu sprechen}.','Стараюсь каждый день говорить по-немецки.'],['Vergiss nicht, mich {anzurufen}!','Не забудь мне позвонить! (anrufen → zu прячется внутрь)']])}
+<div class="trap"><strong>Без zu:</strong> после können, müssen, wollen, sollen, dürfen, möchten — никакого zu. <em>Ich muss arbeiten</em>, не «zu arbeiten».</div>`,
+q:[
+{q:'Ich habe keine Lust, heute …',o:['kochen','zu kochen'],a:1,w:'Lust haben → zu.'},
+{q:'Ich muss heute …',o:['arbeiten','zu arbeiten'],a:0,w:'После müssen — без zu.'},
+{q:'Vergiss nicht, mich …!',o:['anzurufen','zu anrufen','anrufen zu'],a:0,w:'Отделяемый глагол: zu встаёт внутрь → anzurufen.'},
+{q:'Es ist wichtig, pünktlich …',o:['sein','zu sein'],a:1,w:'Es ist wichtig → zu.'}
+]},
+
+{id:'praet',t:'Прошлое в текстах (Präteritum)',s:'Узнавать, не обязательно говорить',
+body:`
+<p>В разговоре немцы говорят «ich habe gemacht» (Perfekt). Но в текстах для чтения и в новостях — другая форма: ging, kam, fand. Тебе не надо её активно использовать — надо <b>узнавать</b>, иначе не поймёшь текст.</p>
+<h3>Обычные глаголы: просто -te</h3>
+${exs([['machen → ich {machte}','делал'],['arbeiten → er {arbeitete}','работал'],['sagen → sie {sagte}','сказала']])}
+<h3>Неправильные — топ, которые будут в тексте</h3>
+<div class="tw"><table>
+<tr><th>видишь</th><th>это глагол</th><th>значит</th></tr>
+<tr><td>war</td><td>sein</td><td>был</td></tr><tr><td>hatte</td><td>haben</td><td>имел</td></tr>
+<tr><td>ging</td><td>gehen</td><td>шёл</td></tr><tr><td>kam</td><td>kommen</td><td>пришёл</td></tr>
+<tr><td>sah</td><td>sehen</td><td>видел</td></tr><tr><td>fand</td><td>finden</td><td>нашёл</td></tr>
+<tr><td>nahm</td><td>nehmen</td><td>взял</td></tr><tr><td>gab</td><td>geben</td><td>дал</td></tr>
+<tr><td>stand</td><td>stehen</td><td>стоял</td></tr><tr><td>lag</td><td>liegen</td><td>лежал</td></tr>
+<tr><td>blieb</td><td>bleiben</td><td>остался</td></tr><tr><td>fuhr</td><td>fahren</td><td>ехал</td></tr>
+<tr><td>schrieb</td><td>schreiben</td><td>писал</td></tr><tr><td>sprach</td><td>sprechen</td><td>говорил</td></tr>
+<tr><td>wusste</td><td>wissen</td><td>знал</td></tr><tr><td>dachte</td><td>denken</td><td>думал</td></tr>
+<tr><td>konnte / musste / wollte</td><td>können / müssen / wollen</td><td>мог / должен был / хотел</td></tr>
+</table></div>
+<div class="note">В письменной части для прошлого спокойно используй Perfekt. Исключение: war, hatte, konnte, musste — их и в письме, и в речи говорят так.</div>`,
+q:[
+{q:'«Er ging nach Hause» значит:',o:['Он идёт домой','Он пошёл домой','Он пойдёт домой'],a:1,w:'ging = прошлое от gehen.'},
+{q:'«Sie fand keine Wohnung» — какой глагол?',o:['fahren','finden','fallen'],a:1,w:'fand ← finden (найти).'},
+{q:'«Wir nahmen den Zug» — какой глагол?',o:['nehmen','nennen'],a:0,w:'nahm ← nehmen (брать).'}
+]}
+];
+
+/* ---------- WORDS ---------- */
+const W={
+'Работа':[
+['die Bewerbung','заявка на работу','Ich schicke meine Bewerbung per E-Mail.'],
+['der Lebenslauf','резюме','Der Lebenslauf sollte kurz sein.'],
+['das Vorstellungsgespräch','собеседование','Morgen habe ich ein Vorstellungsgespräch.'],
+['die Stelle','вакансия, место работы','Die Stelle ist noch frei.'],
+['der Arbeitgeber','работодатель','Mein Arbeitgeber ist zufrieden.'],
+['der Arbeitnehmer','наёмный работник','Arbeitnehmer haben Rechte.'],
+['das Gehalt','зарплата','Das Gehalt ist in Ordnung.'],
+['die Ausbildung','профобучение','Ich mache eine Ausbildung.'],
+['die Erfahrung','опыт','Ich habe viel Erfahrung.'],
+['die Kündigung','увольнение','Er hat die Kündigung bekommen.'],
+['die Überstunden','сверхурочные (мн.)','Ich mache oft Überstunden.'],
+['der Vertrag','договор','Den Vertrag unterschreibe ich morgen.'],
+['die Voraussetzung','условие, требование','Deutsch B2 ist eine Voraussetzung.'],
+['die Weiterbildung','повышение квалификации','Die Firma bezahlt die Weiterbildung.'],
+['selbstständig','самозанятый; самостоятельный','Ich arbeite selbstständig.']
+],
+'Жильё и ведомства':[
+['die Miete','аренда (плата)','Die Miete ist gestiegen.'],
+['die Nebenkosten','коммуналка (мн.)','Die Nebenkosten sind hoch.'],
+['die Kaution','залог','Die Kaution sind drei Monatsmieten.'],
+['der Vermieter','арендодатель','Der Vermieter antwortet nicht.'],
+['der Mieter','квартиросъёмщик','Mieter müssen leise sein.'],
+['der Antrag','заявление','Ich muss einen Antrag stellen.'],
+['das Formular','бланк','Füllen Sie das Formular aus.'],
+['die Behörde','ведомство','Die Behörde ist heute geschlossen.'],
+['der Termin','запись, встреча','Ich brauche einen Termin.'],
+['die Anmeldung','регистрация (по адресу)','Die Anmeldung ist Pflicht.'],
+['die Unterlagen','документы (мн.)','Bringen Sie alle Unterlagen mit.'],
+['die Frist','срок','Die Frist endet am Freitag.'],
+['die Genehmigung','разрешение','Wir brauchen eine Genehmigung.'],
+['die Versicherung','страховка','Die Versicherung zahlt den Schaden.'],
+['kündigen','расторгнуть, уволиться','Ich möchte den Vertrag kündigen.']
+],
+'Здоровье':[
+['die Krankenkasse','больничная касса','Die Krankenkasse übernimmt die Kosten.'],
+['die Krankmeldung','больничный лист','Ich schicke die Krankmeldung an den Chef.'],
+['die Überweisung','направление; перевод денег','Ich brauche eine Überweisung zum Facharzt.'],
+['das Rezept','рецепт','Der Arzt gibt mir ein Rezept.'],
+['die Beschwerden','жалобы, симптомы (мн.)','Seit wann haben Sie Beschwerden?'],
+['die Behandlung','лечение','Die Behandlung dauert zwei Wochen.'],
+['die Vorsorge','профилактика','Vorsorge ist wichtig.'],
+['sich erholen','отдохнуть, восстановиться','Ich muss mich erholen.'],
+['die Ernährung','питание','Gesunde Ernährung hilft.'],
+['die Nebenwirkung','побочное действие','Das Medikament hat Nebenwirkungen.'],
+['der Notfall','экстренный случай','Im Notfall rufen Sie 112.']
+],
+'Общество и экология':[
+['die Umwelt','окружающая среда','Wir müssen die Umwelt schützen.'],
+['der Klimawandel','изменение климата','Der Klimawandel ist ein großes Problem.'],
+['die Mülltrennung','сортировка мусора','In Deutschland ist Mülltrennung normal.'],
+['der Verbrauch','потребление','Der Verbrauch von Strom steigt.'],
+['nachhaltig','экологичный, устойчивый','Ich kaufe gern nachhaltig.'],
+['die Gesellschaft','общество','Die Gesellschaft verändert sich.'],
+['die Integration','интеграция','Sprache ist wichtig für die Integration.'],
+['die Gleichberechtigung','равноправие','Gleichberechtigung ist ein Grundrecht.'],
+['die Armut','бедность','Armut gibt es auch in Deutschland.'],
+['das Ehrenamt','волонтёрство','Sie arbeitet im Ehrenamt.'],
+['die Verantwortung','ответственность','Jeder trägt Verantwortung.'],
+['die Einwanderung','иммиграция','Einwanderung ist ein wichtiges Thema.']
+],
+'Медиа и учёба':[
+['die Werbung','реклама','Werbung ist überall.'],
+['die Nachrichten','новости (мн.)','Ich lese die Nachrichten online.'],
+['die Quelle','источник','Die Quelle ist nicht sicher.'],
+['der Datenschutz','защита данных','Datenschutz ist in Deutschland streng.'],
+['die Abhängigkeit','зависимость','Handy-Abhängigkeit ist ein Problem.'],
+['der Vorteil','плюс, преимущество','Ein Vorteil ist die Flexibilität.'],
+['der Nachteil','минус, недостаток','Ein Nachteil sind die Kosten.'],
+['der Abschluss','диплом, окончание','Mein Abschluss wird anerkannt.'],
+['die Prüfung','экзамен','Die Prüfung ist im Dezember.'],
+['bestehen','сдать (экзамен)','Ich will die Prüfung bestehen.'],
+['durchfallen','провалить','Er ist leider durchgefallen.']
+],
+'Глаголы для экзамена':[
+['behaupten','утверждать','Er behauptet, dass es stimmt.'],
+['betonen','подчёркивать','Ich möchte betonen, dass …'],
+['erwähnen','упоминать','Im Text wird erwähnt, dass …'],
+['vermuten','предполагать','Ich vermute, dass er recht hat.'],
+['bezweifeln','сомневаться','Ich bezweifle das.'],
+['zustimmen','соглашаться','Da stimme ich dir zu.'],
+['widersprechen','возражать','Da muss ich widersprechen.'],
+['beeinflussen','влиять','Medien beeinflussen uns.'],
+['ermöglichen','делать возможным','Das Internet ermöglicht Homeoffice.'],
+['verhindern','предотвращать','Das kann man verhindern.'],
+['unterstützen','поддерживать','Ich unterstütze die Idee.'],
+['fördern','содействовать, развивать','Der Staat fördert Weiterbildung.'],
+['verursachen','вызывать (причину)','Autos verursachen Lärm.'],
+['vermeiden','избегать','Man sollte Stress vermeiden.'],
+['sich auswirken auf','влиять на','Das wirkt sich auf die Gesundheit aus.']
+]};
+
+/* ---------- PHRASES ---------- */
+const P=[
+['Своё мнение','Разговор и письмо',[
+['Meiner Meinung nach ist das sinnvoll.','По-моему, это разумно. (дальше сразу глагол!)'],
+['Ich bin der Ansicht, dass …','Я считаю, что …'],
+['Aus meiner Sicht …','С моей точки зрения …'],
+['Ich finde es wichtig, dass …','Я считаю важным, что …'],
+['Ich kann aus eigener Erfahrung sagen, dass …','Могу сказать по своему опыту, что …']]],
+['Согласие и несогласие','Разговор с партнёром',[
+['Da stimme ich dir zu.','Тут я с тобой согласен.'],
+['Das sehe ich genauso.','Я вижу это так же.'],
+['Da hast du völlig recht.','Тут ты абсолютно прав.'],
+['Das sehe ich etwas anders, weil …','Я вижу это немного иначе, потому что …'],
+['Ich verstehe deinen Punkt, aber …','Понимаю твою мысль, но …'],
+['Da bin ich anderer Meinung.','Тут я другого мнения.']]],
+['Плюсы и минусы','Письмо-мнение и дискуссия',[
+['Ein großer Vorteil ist, dass …','Большой плюс в том, что …'],
+['Ein Nachteil ist allerdings, dass …','Однако минус в том, что …'],
+['Einerseits …, andererseits …','С одной стороны …, с другой …'],
+['Zusammenfassend lässt sich sagen, dass …','Подводя итог, можно сказать, что …']]],
+['Планировать вместе','Часть Sprechen «что-то организовать»',[
+['Wie wäre es, wenn wir …?','Как насчёт того, чтобы мы …?'],
+['Ich schlage vor, dass wir …','Предлагаю, чтобы мы …'],
+['Sollen wir zuerst … besprechen?','Может, сначала обсудим …?'],
+['Wer kümmert sich um …?','Кто займётся …?'],
+['Gute Idee, das machen wir so.','Хорошая идея, так и сделаем.'],
+['Einverstanden.','Договорились.']]],
+['Презентация','Монолог',[
+['Ich möchte heute über das Thema … sprechen.','Сегодня хочу поговорить на тему …'],
+['Zuerst erzähle ich von …, dann …, zum Schluss …','Сначала расскажу о …, потом …, в конце …'],
+['In meinem Heimatland ist das anders.','В моей стране это иначе.'],
+['Damit komme ich zum Schluss.','На этом перехожу к завершению.'],
+['Vielen Dank für Ihre Aufmerksamkeit.','Спасибо за внимание.'],
+['Haben Sie noch Fragen?','Есть ещё вопросы?']]],
+['Выиграть время','Когда завис',[
+['Das ist eine gute Frage.','Хороший вопрос.'],
+['Lassen Sie mich kurz überlegen.','Дайте секунду подумать.'],
+['Wie soll ich sagen …','Как бы сказать …'],
+['Könnten Sie die Frage bitte wiederholen?','Не могли бы вы повторить вопрос?']]],
+['Официальное письмо','Жалоба, запрос',[
+['Sehr geehrte Damen und Herren,','Уважаемые дамы и господа, (если имя неизвестно)'],
+['Sehr geehrte Frau Müller, / Sehr geehrter Herr Müller,','Уважаемая госпожа / Уважаемый господин …'],
+['ich wende mich an Sie, weil …','обращаюсь к вам, потому что …'],
+['Leider muss ich mich über … beschweren.','К сожалению, вынужден пожаловаться на …'],
+['Ich bitte Sie daher, …','Поэтому прошу вас …'],
+['Ich würde mich über eine baldige Antwort freuen.','Буду рад скорому ответу.'],
+['Mit freundlichen Grüßen','С уважением']]]
+];
+
+/* ---------- GLOSSARY ---------- */
+const G=[
+['Verb','Глагол — слово-действие: machen, gehen, sein.'],
+['Subjekt','Тот, кто делает: «ich» в «ich arbeite».'],
+['Hauptsatz','Обычное предложение, где глагол второй.'],
+['Nebensatz','Кусок после weil, dass, wenn, obwohl… Там глагол в конце.'],
+['Konnektor','Связка: weil, deshalb, trotzdem.'],
+['Infinitiv','Начальная форма глагола: machen, arbeiten.'],
+['Partizip II','«Третья форма»: gemacht, gegangen, gesehen. Нужна для Perfekt и пассива.'],
+['Perfekt','Прошлое для разговора: ich habe gemacht.'],
+['Präteritum','Прошлое для текстов: ich machte, ich ging.'],
+['Futur','Будущее: ich werde machen.'],
+['Konjunktiv II','«Бы»: würde, hätte, wäre, könnte.'],
+['Passiv','«Делается» без того, кто делает: wird gemacht.'],
+['Modalverb','Глаголы «могу/должен/хочу»: können, müssen, wollen, sollen, dürfen, mögen.'],
+['trennbares Verb','Отделяемый глагол: anrufen → ich rufe dich an.'],
+['reflexives Verb','Глагол с «sich» (-ся): sich freuen, sich erholen.'],
+['Artikel','der, die, das, ein, eine.'],
+['Nominativ','Падеж «кто? что?».'],
+['Akkusativ','Падеж «кого? что?» — меняет der на den.'],
+['Dativ','Падеж «кому? где?» — dem, der, dem, den.'],
+['Genitiv','Падеж «чей?» и после wegen, trotz: des Mannes, der Frau.'],
+['Präposition','Предлог: mit, für, auf, in.'],
+['Relativsatz','Кусок с «который»: der Mann, der dort steht.'],
+['Adjektivendung','Окончание прилагательного: ein neuer, das neue.'],
+['Nomen-Verb-Verbindung','Устойчивая пара: eine Entscheidung treffen.'],
+['Redemittel','Готовые фразы для разговора и письма.']
+];
+
+/* ---------- render ---------- */
+const app=document.getElementById('app');
+const NAV=[['home','Старт'],['gram','Грамматика'],['words','Слова'],['phr','Фразы'],['wrong','Ошибки'],['test','Тест'],['gloss','Термины'],['me','Мой прогресс']];
+const PARENT={lesson:'gram'};
+const allWords=()=>Object.values(W).flat();
+const knownCount=()=>allWords().filter(x=>S.known[x[0]]).length;
+function wrongCount(){return Object.keys(S.wrong).length}
+function nav(cur){
+  document.getElementById('nav').innerHTML=NAV.map(([k,t])=>{const lab=k==='wrong'&&wrongCount()?`${t} (${wrongCount()})`:t;return `<button data-go="${k}" ${cur===k||(cur==='lesson'&&k==='gram')?'aria-current="page"':''}>${lab}</button>`}).join('');
+  const b=document.getElementById('back');b.hidden=(cur==='home');b.dataset.go=PARENT[cur]||'home';
+  const a=document.querySelector('.tabs [aria-current]');if(a)a.scrollIntoView({block:'nearest',inline:'center'});
+}
+let tt;function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),2200)}
+function streak(){const set=new Set(S.days);let n=0;const d=new Date();if(!set.has(today()))d.setDate(d.getDate()-1);while(set.has(d.toLocaleDateString('sv'))){n++;d.setDate(d.getDate()-1)}return n}
+function doneCount(){return L.filter(l=>S.done[l.id]).length}
+function progressHTML(){const d=doneCount(),p=Math.round(d/L.length*100);return `<div class="progress"><div class="bar"><i style="width:${p}%"></i></div><b>${d} / ${L.length}</b></div>`}
+function plural(n,a,b,c){const m=n%10,h=n%100;return m===1&&h!==11?a:(m>=2&&m<=4&&(h<12||h>14)?b:c)}
+function contTarget(){const v=(S.last||'').split('/')[0];if(v==='lesson'||(S.last&&v!=='gram'))return S.last;const nx=L.find(l=>!S.done[l.id]);return nx&&(S.last||doneCount())?'lesson/'+nx.id:''}
+function lastLabel(t){const [v,id]=(t||'').split('/');if(v==='lesson'){const l=L.find(x=>x.id===id);return l?'тема «'+l.t+'»':''}const n=NAV.find(x=>x[0]===v);return n&&v!=='home'?'раздел «'+n[1]+'»':''}
+
+function home(){
+  const ct=contTarget(),ll=lastLabel(ct);
+  app.innerHTML=`
+  <h1 class="title">Немецкий B2<br><span class="strike">всё подряд</span> только главное</h1>
+  <p class="lead">Здесь нет лишнего. Только то, что реально проверяют на экзамене B2, объяснённое простыми словами. Каждая тема — правило, примеры с озвучкой и мини-тест.</p>
+  ${progressHTML()}
+  <div class="stats"><span><b>${knownCount()}</b>слов выучено</span><span><b>${streak()}</b>${plural(streak(),'день','дня','дней')} подряд</span>${wrongCount()?`<span><b>${wrongCount()}</b>${plural(wrongCount(),'ошибка','ошибки','ошибок')} на повтор</span>`:''}</div>
+  <div class="row" style="margin-top:18px">${ll?`<button class="btn" data-go="${esc(ct)}">Продолжить: ${esc(ll)}</button><button class="btn ghost" data-go="gram">Все темы</button>`:`<button class="btn" data-go="gram">Начать с грамматики</button><button class="btn ghost" data-go="words">Учить слова</button>`}</div>
+  <h2 style="margin-top:36px">Как устроен экзамен</h2>
+  <p>И telc, и Goethe B2 состоят из четырёх частей. Чтобы сдать, обычно нужно набрать около 60%. Точные правила своего экзамена в Лёррахе уточни на курсе — но логика везде одна.</p>
+  <div class="parts">
+    <div class="box"><b>Lesen</b>Чтение. Тексты, объявления, статьи. Тут помогают связки и прошлое в текстах.</div>
+    <div class="box"><b>Hören</b>Слушание. Разговоры, радио. Слушай примеры тут кнопкой ${SPK.replace('<svg','<svg style="width:15px;height:15px;vertical-align:-2px"')}.</div>
+    <div class="box"><b>Schreiben</b>Письмо: формальное (жалоба, запрос) и мнение. Бери готовые фразы.</div>
+    <div class="box"><b>Sprechen</b>Презентация, дискуссия, планирование вместе. Главное — не молчать.</div>
+  </div>
+  <h2 style="margin-top:28px">Как учить, чтобы заходило</h2>
+  <p>Одна тема грамматики в день, пока не пройдёшь тест без ошибок. Каждый день 10 минут слов. Каждый вечер выучи наизусть 2 фразы из раздела «Фразы» и скажи их вслух в своём предложении. Раз в пару дней заходи в «Ошибки».</p>
+  <div class="note">Экзаменатору не нужна идеальность. Ему нужно, чтобы ты понятно говорил, связывал мысли и не боялся длинных предложений.</div>
+  <p class="muted" style="font-size:15px">Непонятное слово типа «Dativ» или «Nebensatz»? Загляни в «Термины» — там всё по-человечески.</p>`;
+}
+
+function gram(){
+  app.innerHTML=`<h2>Грамматика — ${L.length} тем</h2>
+  <p>Иди по порядку: первые три темы — фундамент, на них держится всё остальное. Галочка появится, когда ответишь на все вопросы темы правильно.</p>
+  ${progressHTML()}
+  <div class="lessons">${L.map((l,i)=>{const sc=S.score[l.id];const sub=S.done[l.id]?'пройдено':(sc!=null?`лучший результат ${sc} из ${l.q.length}`:l.s);
+    return `<button class="lesson-btn" data-lesson="${l.id}"><span class="n">${i+1}</span><span class="t">${l.t}<span class="s">${sub}</span></span><span class="check ${S.done[l.id]?'on':''}" aria-label="${S.done[l.id]?'пройдено':'не пройдено'}">${S.done[l.id]?'✓':''}</span></button>`}).join('')}</div>`;
+}
+
+function lesson(id){
+  const i=L.findIndex(l=>l.id===id),l=L[i];if(!l)return gram();
+  app.innerHTML=`<button class="backlink" data-go="gram">← Все темы</button>
+  <h2>${i+1}. ${l.t}</h2>${l.body}
+  <div class="quiz"><h2 class="hand" style="font-size:36px">Проверь себя</h2><div id="qz"></div>
+  <div class="row"><button class="btn ghost" id="retry">Пройти заново</button>${L[i+1]?`<button class="btn" data-lesson="${L[i+1].id}">Следующая тема</button>`:`<button class="btn" data-go="test">К большому тесту</button>`}</div></div>`;
+  const qz=document.getElementById('qz');let res={};
+  function mark(k,ok){const key=l.id+':'+k;if(ok)delete S.wrong[key];else S.wrong[key]=1;nav('lesson')}
+  function finish(){
+    if(Object.keys(res).length<l.q.length){save();return}
+    const c=Object.values(res).filter(Boolean).length;
+    if(c>(S.score[l.id]||0))S.score[l.id]=c;
+    if(c===l.q.length&&!S.done[l.id]){S.done[l.id]=true;save();toast('Тема пройдена ✓ Прогресс сохранён')}
+    else{save();if(c<l.q.length)toast(`${c} из ${l.q.length}. Ошибки ушли в раздел «Ошибки»`)}
+  }
+  function build(){res={};qz.innerHTML='';l.q.forEach((q,k)=>{const el=document.createElement('div');el.className='q';qz.appendChild(el);
+    if(q.b) builder(el,q,ok=>{const first=!(k in res);res[k]=ok;mark(k,ok);if(first||ok)finish()});
+    else mc(el,q,ok=>{if(!(k in res)){res[k]=ok;mark(k,ok);finish()}});});}
+  document.getElementById('retry').onclick=()=>{build();qz.scrollIntoView({block:'start'})};build();
+}
+
+function mc(el,q,cb){
+  el.innerHTML=`<div class="qt">${esc(q.q)}</div><div class="opts">${q.o.map((o,j)=>`<button class="opt" data-j="${j}">${esc(o)}</button>`).join('')}</div>`;
+  el.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{const j=+b.dataset.j,ok=j===q.a;
+    el.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(+x.dataset.j===q.a)x.classList.add('right')});
+    if(!ok)b.classList.add('wrong');
+    const w=document.createElement('div');w.className='why';w.textContent=(ok?'Верно! ':'Не совсем. ')+q.w;el.appendChild(w);cb(ok);});
+}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function builder(el,q,cb){
+  let pool=shuffle(q.b.map((w,i)=>({w,i}))),line=[];
+  if(pool.map(x=>x.w).join(' ')===q.a&&pool.length>1)pool.reverse();
+  el.classList.add('builder');
+  function draw(){el.innerHTML=`<div class="qt">Собери предложение: нажимай на слова по порядку</div>
+    <div class="line">${q.p?`<span class="prefix">${esc(q.p)}</span>`:''}${line.map((t,k)=>`<button class="tok" data-l="${k}">${esc(t.w)}</button>`).join('')}</div>
+    <div class="pool">${pool.map((t,k)=>`<button class="tok" data-p="${k}">${esc(t.w)}</button>`).join('')}</div>
+    <div class="row"><button class="btn" data-chk>Проверить</button><button class="btn ghost" data-clr>Сбросить</button></div><div class="result" aria-live="polite"></div>`;
+    el.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{line.push(pool.splice(+b.dataset.p,1)[0]);draw()});
+    el.querySelectorAll('[data-l]').forEach(b=>b.onclick=()=>{pool.push(line.splice(+b.dataset.l,1)[0]);draw()});
+    el.querySelector('[data-clr]').onclick=()=>{pool=pool.concat(line);line=[];draw()};
+    el.querySelector('[data-chk]').onclick=()=>{const r=el.querySelector('.result');
+      if(pool.length){r.className='result no';r.textContent='Используй все слова.';return}
+      const ans=line.map(t=>t.w).join(' ').toLowerCase(),ok=ans===q.a.toLowerCase();
+      r.className='result '+(ok?'ok':'no');
+      r.textContent=ok?'Отлично! Порядок правильный.':'Пока нет. Правильно: '+(q.p?q.p+' ':'')+(q.cap?q.a[0].toUpperCase()+q.a.slice(1):q.a)+'.';
+      cb(ok);};
+  }
+  draw();
+}
+
+/* words */
+let wTopic=Object.keys(W)[0],deck=[],wi=0,onlyNew=true;
+function artClass(w){const m=w.match(/^(der|die|das) /);return m?'art-'+m[1]:''}
+function wordFace(w){const m=w.match(/^(der|die|das) (.*)$/);return m?`<span class="art-${m[1]}">${m[1]}</span> ${esc(m[2])}`:esc(w)}
+function makeDeck(){deck=W[wTopic].filter(x=>!onlyNew||!S.known[x[0]]);deck=shuffle(deck);wi=0}
+function words(){
+  makeDeck();
+  const total=Object.values(W).flat().length,kn=Object.values(W).flat().filter(x=>S.known[x[0]]).length;
+  app.innerHTML=`<h2>Слова B2</h2>
+  <p>Нажми на карточку, чтобы перевернуть. Цвет артикля помогает запомнить род: <b class="art-der">der</b> синий, <b class="art-die">die</b> красный, <b class="art-das">das</b> зелёный. Выучено: ${kn} из ${total}.</p>
+  <div class="chips">${Object.keys(W).map(t=>`<button class="chip" data-topic="${esc(t)}" aria-pressed="${t===wTopic}">${esc(t)}</button>`).join('')}</div>
+  <div id="cardwrap"></div>
+  <div class="row" style="justify-content:center"><button class="chip" id="mode" aria-pressed="${!onlyNew}">${onlyNew?'Показать и выученные':'Только невыученные'}</button></div>`;
+  document.getElementById('mode').onclick=()=>{onlyNew=!onlyNew;words()};
+  card();
+}
+function card(){
+  const wrap=document.getElementById('cardwrap');
+  if(!deck.length){wrap.innerHTML=`<div class="box" style="text-align:center"><p class="note" style="margin:0 auto">В этой теме всё выучено!</p><div class="row" style="justify-content:center"><button class="btn ghost" id="again">Повторить всю тему</button></div></div>`;
+    document.getElementById('again').onclick=()=>{W[wTopic].forEach(x=>delete S.known[x[0]]);save();words()};return}
+  if(wi>=deck.length){makeDeck();if(!deck.length)return card()}
+  const [de,ru,e]=deck[wi];
+  wrap.innerHTML=`<div class="card" id="cd" role="button" tabindex="0" aria-label="Перевернуть карточку"><div class="card-in">
+    <div class="face"><div class="w">${wordFace(de)}</div><span class="hint">нажми, чтобы увидеть перевод</span></div>
+    <div class="face back"><div class="tr">${esc(ru)}</div><div class="exs">${esc(e)}</div></div></div></div>
+    <div class="cardbar"><button class="btn ghost" data-sayw>🔊 Послушать</button><button class="btn ghost" id="later">Ещё повторю</button><button class="btn" id="know">Знаю</button></div>
+    <div class="count">${wi+1} из ${deck.length}</div>`;
+  const cd=document.getElementById('cd');
+  const flip=()=>cd.classList.toggle('flip');cd.onclick=flip;cd.onkeydown=ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();flip()}};
+  wrap.querySelector('[data-sayw]').onclick=()=>speak(de+'. '+e);
+  document.getElementById('later').onclick=()=>{wi++;card()};
+  document.getElementById('know').onclick=()=>{S.known[de]=true;save();deck.splice(wi,1);card()};
+}
+
+function phr(){
+  app.innerHTML=`<h2>Готовые фразы</h2><p>Это твоя «страховка» на экзамене. Выучи по 2–3 из каждой группы наизусть — и на любую тему сможешь начать говорить или писать.</p>
+  ${P.map(g=>`<div class="ph-group"><h3>${g[0]}</h3><p class="muted" style="font-size:15px;margin:0 0 4px">${g[1]}</p>${exs(g[2])}</div>`).join('')}`;
+}
+function gloss(){
+  app.innerHTML=`<h2>Словарик терминов</h2><p>Учебники любят умные слова. Вот что они значат по-человечески.</p>
+  <dl class="gl">${G.map(([a,b])=>`<dt>${a}</dt><dd>${esc(b)}</dd>`).join('')}</dl>`;
+}
+
+
+function qByKey(key){const [id,k]=key.split(':');const l=L.find(x=>x.id===id);return l&&l.q[+k]?{l,q:l.q[+k],key}:null}
+function wrong(){
+  const items=Object.keys(S.wrong).map(qByKey).filter(Boolean);
+  if(!items.length){app.innerHTML=`<h2>Ошибки</h2><p>Сюда автоматически попадают вопросы, где ты ошибся — в темах и в тесте. Сейчас пусто: ошибок нет или ты их все исправил.</p><div class="row"><button class="btn" data-go="test">Пройти тест</button><button class="btn ghost" data-go="gram">К темам</button></div>`;return}
+  app.innerHTML=`<h2>Ошибки — ${items.length}</h2><p>Ответь правильно, и вопрос уйдёт из списка. Если непонятно почему — открой тему по ссылке.</p><div id="wl"></div><div class="row"><button class="btn ghost" id="wre">Показать оставшиеся заново</button></div>`;
+  document.getElementById('wre').onclick=()=>wrong();
+  const wl=document.getElementById('wl');
+  items.forEach(it=>{const wrap=document.createElement('div');wrap.innerHTML=`<p class="muted" style="font-size:14px;margin:18px 0 -6px">Тема: <a href="#lesson/${it.l.id}">${esc(it.l.t)}</a></p>`;
+    const el=document.createElement('div');el.className='q';wrap.appendChild(el);wl.appendChild(wrap);
+    const cb=ok=>{if(ok&&S.wrong[it.key]){delete S.wrong[it.key];save();nav('wrong');toast('Исправлено ✓')}};
+    it.q.b?builder(el,it.q,cb):mc(el,it.q,cb);});
+}
+
+function test(){
+  const all=[];L.forEach(l=>l.q.forEach((q,k)=>{if(!q.b)all.push(Object.assign({t:l.t,key:l.id+':'+k},q))}));
+  const qs=shuffle(all).slice(0,15);let k=0,score=0;
+  function step(){
+    if(k>=qs.length){const p=Math.round(score/qs.length*100);
+      S.tests.push({d:today(),s:score,n:qs.length});S.tests=S.tests.slice(-30);save();nav('test');toast('Результат сохранён');
+      const best=Math.max(...S.tests.map(t=>Math.round(t.s/t.n*100)));
+      app.innerHTML=`<h2>Результат</h2><div class="score">${score} / ${qs.length}</div><p style="margin-top:12px">${p>=60?'Проходной уровень есть. Добивай слабые темы — и будет запас.':'Пока ниже 60%. Не страшно: зайди в «Ошибки», повтори и пройди тест ещё раз.'}</p><p class="muted">Твой лучший результат: ${best}%</p><div class="row"><button class="btn" id="re">Новый тест</button>${wrongCount()?`<button class="btn ghost" data-go="wrong">Разобрать ошибки (${wrongCount()})</button>`:''}</div>`;
+      document.getElementById('re').onclick=test;return}
+    const q=qs[k];
+    app.innerHTML=`<h2>Большой тест</h2><p class="muted">Вопрос ${k+1} из ${qs.length}, тема: ${esc(q.t)}</p><div class="q" id="tq"></div><div class="row"><button class="btn" id="nx" hidden>Дальше</button></div>`;
+    mc(document.getElementById('tq'),q,ok=>{if(ok)score++;else{S.wrong[q.key]=1;save()}const n=document.getElementById('nx');n.hidden=false;n.focus();n.onclick=()=>{k++;step();window.scrollTo(0,0)}});
+  }
+  step();
+}
+
+function exportStr(){return btoa(unescape(encodeURIComponent(JSON.stringify(S))))}
+function importObj(o){if(!o||typeof o!=='object'||typeof o.done!=='object')throw new Error('bad');S=Object.assign(EMPTY(),o);save();toast('Прогресс загружен ✓');route()}
+function me(){
+  const all=allWords(),kn=knownCount();
+  const best=S.tests.length?Math.max(...S.tests.map(t=>Math.round(t.s/t.n*100))):null;
+  app.innerHTML=`<h2>Мой прогресс</h2>
+  <p>Всё сохраняется само, после каждого ответа — прямо в браузере на этом телефоне. Чтобы перенести прогресс на другое устройство или подстраховаться, скачай файл.</p>
+  ${storageOK?'':'<div class="trap"><strong>Внимание:</strong> браузер не даёт сохранять (например, режим инкогнито). Прогресс пропадёт после закрытия — скачай файл.</div>'}
+  <div class="parts">
+    <div class="box"><b>${doneCount()} / ${L.length}</b>тем пройдено</div>
+    <div class="box"><b>${kn} / ${all.length}</b>слов выучено</div>
+    <div class="box"><b>${streak()}</b>${plural(streak(),'день','дня','дней')} подряд, всего занимался ${S.days.length} ${plural(S.days.length,'день','дня','дней')}</div>
+    <div class="box"><b>${best!=null?best+'%':'—'}</b>лучший тест${S.tests.length?', пройдено тестов: '+S.tests.length:''}</div>
+  </div>
+  ${S.tests.length?`<h3>Последние тесты</h3><div class="tw"><table><tr><th>Дата</th><th>Результат</th></tr>${S.tests.slice(-5).reverse().map(t=>`<tr><td>${esc(t.d)}</td><td>${t.s} / ${t.n}</td></tr>`).join('')}</table></div>`:''}
+  <h3>Сохранить и перенести</h3>
+  <div class="row"><button class="btn" id="exp">Скачать файл прогресса</button><label class="btn ghost" for="imp" tabindex="0" id="impl">Загрузить из файла</label><input type="file" id="imp" accept=".json,application/json" hidden></div>
+  <p class="muted" style="font-size:15px;margin-top:16px">С файлом неудобно? Скопируй код, отправь себе в Telegram, а на другом телефоне вставь его сюда.</p>
+  <textarea id="code" rows="3" aria-label="Код прогресса" placeholder="Сюда появится код или вставь свой"></textarea>
+  <div class="row"><button class="btn ghost" id="cp">Скопировать код</button><button class="btn ghost" id="ld">Загрузить из кода</button></div>
+  <h3>Как приложение на телефоне</h3>
+  <p>Открой сайт в браузере → меню (⋮ в Chrome или «Поделиться» в Safari) → «Добавить на главный экран». Появится иконка, курс откроется как приложение и будет работать даже без интернета.</p>
+  <h3>Начать заново</h3><div class="row"><button class="btn ghost danger" id="rst">Сбросить весь прогресс</button></div>`;
+  const code=document.getElementById('code'),imp=document.getElementById('imp');
+  document.getElementById('exp').onclick=()=>{try{const blob=new Blob([JSON.stringify(S,null,1)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='deutsch-b2-progress-'+today()+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1500);toast('Файл скачан')}catch(e){toast('Не получилось — используй код ниже')}};
+  document.getElementById('impl').onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();imp.click()}};
+  imp.onchange=()=>{const f=imp.files[0];if(!f)return;f.text().then(t=>importObj(JSON.parse(t))).catch(()=>toast('Это не файл прогресса'))};
+  document.getElementById('cp').onclick=()=>{code.value=exportStr();code.select();if(navigator.clipboard)navigator.clipboard.writeText(code.value).then(()=>toast('Код скопирован'),()=>toast('Выдели код и скопируй вручную'));else toast('Выдели код и скопируй вручную')};
+  document.getElementById('ld').onclick=()=>{try{importObj(JSON.parse(decodeURIComponent(escape(atob(code.value.trim())))))}catch(e){toast('Код не подходит')}};
+  document.getElementById('rst').onclick=()=>{if(confirm('Точно удалить весь прогресс? Это нельзя отменить.')){S=EMPTY();save();toast('Прогресс сброшен');route()}};
+}
+
+const VIEWS={home,gram,words,phr,gloss,test,wrong,me};
+const REMEMBER=['gram','words','phr','wrong','lesson'];
+function route(){
+  const h=location.hash.slice(1)||'home';const [v,id]=h.split('/');
+  const known=VIEWS[v]||v==='lesson';
+  nav(known?v:'home');
+  if(v==='lesson')lesson(id);else (VIEWS[v]||home)();
+  if(REMEMBER.includes(v)){S.last=h;save()}
+  window.scrollTo(0,0);
+}
+document.addEventListener('click',e=>{
+  const g=e.target.closest('[data-go]');if(g){if(location.hash.slice(1)===g.dataset.go)route();else location.hash=g.dataset.go;return}
+  const l=e.target.closest('[data-lesson]');if(l){location.hash='lesson/'+l.dataset.lesson;return}
+  const t=e.target.closest('[data-topic]');if(t){wTopic=t.dataset.topic;words();return}
+  const s=e.target.closest('[data-say]');if(s){speak(s.dataset.say)}
+});
+window.addEventListener('hashchange',route);
+if(window.speechSynthesis)speechSynthesis.onvoiceschanged=()=>{};
+if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});
+route();
+</script>
+</body>
+</html>
